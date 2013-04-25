@@ -4,4 +4,8 @@ class Register
   def initialize(object, method)
     self.object, self.method, self.priority = object, method, 0
   end
+
+  def fetch
+    object.send(method)
+  end
 end

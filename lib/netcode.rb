@@ -10,4 +10,8 @@ class Netcode
   def connected?
     !connection.nil?
   end
+
+  def fetch_info
+    registers.map(&:fetch)
+  end
 end
