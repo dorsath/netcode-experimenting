@@ -35,21 +35,24 @@ class Netcode
     update_frequency.each_with_index { |freq, index| frequencies[index] = freq }
     sorted = frequencies.sort_by { |d| d[1] }
 
-    base  = sorted.shift
-    total = sorted.pop
+    total = sorted.last
 
-    1.upto((total[1] / base[1]).floor) do |r|
-      queue << base[0]
-      sorted.each do |frequency|
-        occurance = queue.select { |d| d == frequency[0] }.count
-        if ((r * base[1]) /  frequency[1]) > occurance
-          queue << frequency[0]
-        end
+    sorted.each do |base|
+      ((total[1] / base[1]).floor).times do |r|
+        queue << [base[0], r * base[1]]
       end
     end
 
-    queue << total[0]
-
-    queue
+    sort_on_time = queue.sort_by { |d| d[1] }
+    x = 1
+    sort_on_time.map do |prio, time|
+      if sort_on_time.count > x
+        time_till_next_item_in_queue = sort_on_time[x][1] - time
+      else
+        time_till_next_item_in_queue = total[1] - time
+      end
+      x += 1
+      [prio, time_till_next_item_in_queue]
+    end
   end
 end

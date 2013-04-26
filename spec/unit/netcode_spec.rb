@@ -17,7 +17,7 @@ describe Netcode do
 
     it "builds a queue based on the frequencies" do
       subject.update_frequency = [10, 5, 1]
-      subject.build_queue.should == [2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 0]
+      subject.build_queue.should == [[2, 0], [1, 0], [0, 1], [2, 1], [2, 1], [2, 1], [2, 1], [1, 0], [2, 1], [2, 1], [2, 1], [2, 1], [2, 1]]
     end
   end
 
