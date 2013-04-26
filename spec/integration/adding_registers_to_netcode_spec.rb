@@ -23,18 +23,21 @@ describe Netcode do
 
     context ".priority" do
       let(:high_prio_object)  { double("high_prio") }
-
       let(:high_prio_register){ Register.new(high_prio_object, :position, 2) }
-
-      before do
-        high_prio_object.stub(:position) { "high prio info" }
-      end
+      before { high_prio_object.stub(:position) { "high prio info" } }
 
       it "only fetches of the priority asked" do
         subject.add_register(high_prio_register, 2)
 
         subject.fetch_info(2).should == ["high prio info"]
       end
+
+      it "doesn't allow higher prio than 2" do
+        expect { subject.add_register(high_prio_register, 3) }.to raise_exception
+      end
     end
+  end
+
+  context ".feed_loop" do
   end
 end
