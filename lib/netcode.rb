@@ -26,6 +26,15 @@ class Netcode
   end
 
   def start
+    queue = build_queue
+
+    queue.each do |item|
+      sleep_time = item[1]
+      priority   = item[0]
+
+      fetch_info(priority)
+      sleep(sleep_time / 1000.to_f ) if sleep_time > 0
+    end
   end
 
   def build_queue

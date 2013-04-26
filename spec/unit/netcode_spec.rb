@@ -23,11 +23,18 @@ describe Netcode do
 
   context ".feed_loop" do
     it "calls each priority on its own frequency" do
-      #times = []
-      #t0 = Time.now.to_f
-      #subject.start
-      #subject.stub(:fetch_info) { times << (t0 - Time.now.to_f) }
-      #p times
+      times = []
+      queue = subject.build_queue.unshift([0, 0])
+
+      t0 = Time.now.to_f
+      subject.stub(:fetch_info) { times << ((Time.now.to_f - t0) * 1000) }
+
+      subject.start
+
+      times.each_with_index do |time, index|
+        dt = (index == 0 ? time : time - times[index - 1])
+        (dt - queue[index][1]).abs.should < 2
+      end
     end
   end
 end
