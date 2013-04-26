@@ -28,6 +28,10 @@ class Netcode
   def start
     queue = build_queue
 
+    run_queue(queue)
+  end
+
+  def run_queue(queue)
     queue.each do |item|
       sleep_time = item[1]
       priority   = item[0]

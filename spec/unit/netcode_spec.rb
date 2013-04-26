@@ -22,15 +22,22 @@ describe Netcode do
   end
 
   context ".feed_loop" do
+    it "runs a queue of times and priorities" do
+      queue = [[0,1],[1,1],[2,1]]
+      subject.should_receive(:fetch_info).exactly(3)
+      subject.run_queue(queue)
+    end
+
     it "calls each priority on its own frequency" do
       times = []
-      queue = subject.build_queue.unshift([0, 0])
+      queue = subject.build_queue
 
       t0 = Time.now.to_f
       subject.stub(:fetch_info) { times << ((Time.now.to_f - t0) * 1000) }
 
-      subject.start
+      subject.run_queue(queue)
 
+      queue.unshift([0, 0])
       times.each_with_index do |time, index|
         dt = (index == 0 ? time : time - times[index - 1])
         (dt - queue[index][1]).abs.should < 2
