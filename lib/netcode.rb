@@ -25,10 +25,21 @@ class Netcode
     priority(prio).map(&:fetch)
   end
 
-  def start
+  def start!
     queue = build_queue
+    self.continue = true
 
-    run_queue(queue)
+    Thread.new do
+      loop do
+        run_queue(queue)
+
+        break unless continue
+      end
+    end
+  end
+
+  def stop!
+    self.continue = false
   end
 
   def run_queue(queue)
@@ -68,4 +79,8 @@ class Netcode
       [prio, time_till_next_item_in_queue]
     end
   end
+
+  private
+
+  attr_accessor :continue
 end
