@@ -40,7 +40,7 @@ describe Netcode do
       queue.unshift([0, 0])
       times.each_with_index do |time, index|
         dt = (index == 0 ? time : time - times[index - 1])
-        (dt - queue[index][1]).abs.should < 2
+        (dt - queue[index][1]).abs.should < 3
       end
     end
   end
