@@ -17,6 +17,10 @@ class Netcode
     registers[prio_level]
   end
 
+  def connect(ip_address)
+    self.connection = Connection.new(ip_address)
+  end
+
   def connected?
     !connection.nil?
   end
@@ -26,6 +30,8 @@ class Netcode
   end
 
   def start!
+    raise Netcode::NoConnectionError unless connected?
+
     queue = build_queue
     self.continue = true
 
