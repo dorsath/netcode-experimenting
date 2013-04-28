@@ -11,7 +11,6 @@ class Person
   end
 
   def position
-    @position[0] += 1
     @position
   end
 end
