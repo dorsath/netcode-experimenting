@@ -1,3 +1,5 @@
+require_relative "../support/env"
+
 require_relative '../../lib/connection'
 
 describe Connection do
@@ -6,7 +8,7 @@ describe Connection do
   end
 
   context ".sending" do
-    subject { Connection.new("127.0.0.1") }
+    subject { Connection.new(localhost) }
 
   end
 end

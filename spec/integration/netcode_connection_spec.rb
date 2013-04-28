@@ -1,6 +1,8 @@
+require_relative "../support/env"
+
 describe Netcode do
   it "creates a new connection on connect" do
-    subject.connect("127.0.0.1")
+    subject.connect(localhost)
     subject.connection.should be_a(Connection)
   end
 

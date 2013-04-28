@@ -1,3 +1,4 @@
+require_relative "../support/env"
 require_relative "../../lib/netcode"
 
 describe Netcode do
@@ -23,7 +24,7 @@ describe Netcode do
 
   context ".feed_loop" do
     before do
-      subject.connect("127.0.0.1")
+      subject.connect(localhost)
     end
 
     it "runs a queue of times and priorities" do
