@@ -53,8 +53,9 @@ class Netcode
       sleep_time = item[1]
       priority   = item[0]
 
-      fetch_info(priority)
-      sleep(sleep_time / 1000.to_f ) if sleep_time > 0
+      info = fetch_info(priority)
+      connection.send_data(info)
+      sleep(sleep_time / 1000.0 ) if sleep_time > 0
     end
   end
 

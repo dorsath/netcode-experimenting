@@ -22,6 +22,10 @@ describe Netcode do
   end
 
   context ".feed_loop" do
+    before do
+      subject.connect("127.0.0.1")
+    end
+
     it "runs a queue of times and priorities" do
       queue = [[0,1],[1,1],[2,1]]
       subject.should_receive(:fetch_info).exactly(3)
