@@ -21,4 +21,16 @@ describe Netcode do
     subject.run_queue(queue)
   end
 
+  context ".server activated" do
+    it "sends the data from the object to the server via connection" do
+      server = TestServer.new
+
+      queue = [[0,0]]
+      subject.run_queue(queue)
+      sleep(0.1)
+      server.response.should == ["Hello world"]
+    end
+
+  end
+
 end

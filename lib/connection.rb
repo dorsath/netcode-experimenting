@@ -1,4 +1,6 @@
+require 'json'
 require 'socket'
+
 class Connection #< EventMachine::Connection
   attr_accessor :address, :port
 
@@ -8,13 +10,14 @@ class Connection #< EventMachine::Connection
     self.port    = port
   end
 
-  def send_data(data)
+  def send_data(complex_data)
+    data = complex_data.to_json
     begin
       loop do
-        bytes = client.write_nonblock(payload)
+        bytes = client.write_nonblock(data)
 
-        break if bytes >= payload.to_s.size
-        payload.slice!(0, bytes)
+        break if bytes >= data.size
+        data.slice!(0, bytes)
         print "sending more\n"
         IO.select(nil, [client])
       end
