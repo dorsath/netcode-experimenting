@@ -25,6 +25,7 @@ describe Netcode do
   context ".feed_loop" do
     before do
       subject.connect(localhost)
+      subject.connection.stub(:send_data)
     end
 
     it "runs a queue of times and priorities" do
